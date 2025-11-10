@@ -6,8 +6,8 @@ import smtplib, ssl, random, os, uuid
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime, timedelta
-import random as py_random 
 from sqlalchemy.sql.expression import func
+
 NEPAL_OFFSET = timedelta(hours=5, minutes=45)
 
 
@@ -782,6 +782,7 @@ def file_too_large(e):
 # ----------------- RUN -----------------
 if __name__ == '__main__':
     app.run(debug=False)
+
 
 
 
