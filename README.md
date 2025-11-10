@@ -10,7 +10,6 @@
 <ul>
     <li><a href="#features">Features</a></li>
     <li><a href="#project-structure">Project Structure</a></li>
-    <li><a href="#quick-start">Quick Start</a></li>
     <li><a href="#security-features">Security Features</a></li>
     <li><a href="#browser-compatibility">Browser Compatibility</a></li>
     <li><a href="#contributing">Contributing</a></li>
@@ -31,37 +30,30 @@
 <pre>
 quizzer/
 │
-├── app.py               # Main Flask app
-├── templates/           # HTML templates
+├── app.py               
+├── templates/           
 │   ├── index.html
 │   ├── login.html
 │   ├── register.html
 │   └── quiz.html
-├── static/              # CSS, JS, images
+├── static/             
 │   ├── style.css
-│   └── script.js
-├── requirements.txt     # Python dependencies
-├── README.html          # Project README
-└── .gitignore
+│   └── script.js           
+└── requirements.txt 
 </pre>
 
-<h2 id="quick-start">🚀 Quick Start</h2>
-<ol>
-    <li>📥 <strong>Clone the repository</strong>:
-        <pre>git clone https://github.com/yourusername/quizzer.git
-cd quizzer</pre>
-    </li>
-    <li>🌐 <strong>Set up virtual environment and install dependencies</strong>:
-        <pre>python -m venv venv
-venv\Scripts\activate  # Windows
-source venv/bin/activate # macOS/Linux
-pip install -r requirements.txt</pre>
-    </li>
-    <li>🎯 <strong>Run the app</strong>:
-        <pre>python app.py</pre>
-        Open <code>http://127.0.0.1:5000/</code> in your browser
-    </li>
-</ol>
+
+## 🛠️ Technologies Used
+
+| Technology | Badge |
+|------------|-------|
+| HTML       | ![HTML](https://img.shields.io/badge/HTML-E34F26?style=for-the-badge&logo=html5&logoColor=white) |
+| CSS        | ![CSS](https://img.shields.io/badge/CSS-1572B6?style=for-the-badge&logo=css3&logoColor=white) |
+| JavaScript | ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) |
+| Python Flask | ![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white) |
+
+
+</pre>
 
 <h2 id="security-features">🛡️ Security Features</h2>
 <ul>
