@@ -803,6 +803,8 @@ table button:hover {
 
 <div id="toast" class="toast"></div>
 
+
+
 <script>
 const currentAdminId = {{ session['id'] }};
 function toggleSidebar(){ document.getElementById('sidebar').classList.toggle('show'); }
@@ -827,10 +829,19 @@ function openEditModal(id){ const row=document.querySelector(`tr[data-id='${id}'
 function closeEditModal(){ document.getElementById("editUserModal").style.display="none"; }
 
 /* ===== Delete Users & Reports (unchanged) ===== */
-let deleteTargetId=null; let deleteReportId=null;
+let deleteTargetId=null; let deleteReportId=null; let deleteQuestionId = null;
 function confirmDeleteUser(id){ const row=document.querySelector(`tr[data-id='${id}']`); const role=row.querySelector(".role").innerText.trim(); if(role==="admin"){showToast("❌ Cannot delete admin!","error");return;} if(parseInt(id)===currentAdminId){showToast("❌ Cannot delete yourself!","error");return;} deleteTargetId=id; deleteReportId=null; document.getElementById("deleteConfirmModal").style.display="flex"; }
-function confirmDeleteReport(id){ deleteReportId=id; deleteTargetId=null; document.getElementById("deleteConfirmModal").style.display="flex"; }
+function confirmDeleteReport(id){
+  deleteReportId = id;
+  deleteTargetId = null;
+  deleteQuestionId = null; // make sure other delete flags are cleared
+  document.getElementById("deleteConfirmModal").style.display = "flex";
+}
+
 function closeDeleteConfirm(){ document.getElementById("deleteConfirmModal").style.display="none"; deleteTargetId=null; deleteReportId=null; }
+
+
+
 
 /* ===== Logout ===== */
 /* ===== Logout Modal ===== */
@@ -868,20 +879,57 @@ document.getElementById("editUserForm").addEventListener("submit",async e=>{
 });
 
 /* ===== Confirm Delete AJAX ===== */
-document.getElementById("confirmDeleteBtn").addEventListener("click", async ()=>{
-  if(deleteTargetId){
-    try{ const res=await fetch(`/admin/delete_user/${deleteTargetId}`,{method:"DELETE"}); const result=await res.json();
-      if(result.ok){document.querySelector(`tr[data-id='${deleteTargetId}']`).remove();showToast("🗑️ User deleted!");}
-      else showToast("❌ "+result.error,"error"); }catch(e){showToast("❌ "+e.message,"error");}
-    deleteTargetId=null;
-  } else if(deleteReportId){
-    try{ const res=await fetch(`/admin/delete_report/${deleteReportId}`,{method:"DELETE"}); const result=await res.json();
-      if(result.ok){document.querySelector(`#reportsTable tr[data-id='${deleteReportId}']`).remove();showToast("🗑️ Report deleted!");}
-      else showToast("❌ "+result.error,"error"); }catch(e){showToast("❌ "+e.message,"error");}
-    deleteReportId=null;
+document.getElementById("confirmDeleteBtn").addEventListener("click", async () => {
+  try {
+    // ===== Delete Report =====
+    if (deleteReportId) {
+      const res = await fetch(`/admin/delete_report/${deleteReportId}`, { method: 'DELETE' });
+      const result = await res.json();
+      if (result.ok) {
+        // Remove the row from the table immediately
+       const row = document.querySelector(`#reportsTable tr[data-id='${deleteReportId}']`);
+
+        if (row) row.remove();
+        showToast("🗑️ Report deleted!");
+      } else {
+        showToast("❌ " + result.error, 'error');
+      }
+      deleteReportId = null;
+    }
+
+    // ===== Delete User (already working) =====
+    else if (deleteTargetId) {
+      const res = await fetch(`/admin/delete_user/${deleteTargetId}`, { method: 'DELETE' });
+      const result = await res.json();
+      if (result.ok) {
+        document.querySelector(`tr[data-id='${deleteTargetId}']`).remove();
+        showToast("🗑️ User deleted!");
+      } else {
+        showToast("❌ " + result.error, 'error');
+      }
+      deleteTargetId = null;
+    }
+
+    // ===== Delete Question (already working) =====
+    else if (deleteQuestionId) {
+      const res = await fetch(`/admin/delete_question/${deleteQuestionId}`, { method:'DELETE' });
+      const result = await res.json();
+      if(result.ok){
+        document.querySelector(`#questionsTable tr[data-id='${deleteQuestionId}']`).remove();
+        showToast("🗑️ Question deleted!");
+      } else showToast("❌ "+result.error,'error');
+      deleteQuestionId = null;
+    }
+
+  } catch (err) {
+    showToast("❌ " + err.message, 'error');
   }
+
   closeDeleteConfirm();
 });
+
+
+
 
 /* ===== Quizzes Section JS ===== */
 const facultySelect=document.getElementById('faculty');
@@ -1087,20 +1135,12 @@ document.getElementById('editQuestionForm').addEventListener('submit', async e=>
     showToast("✅ Question updated!");
   } else showToast("❌ "+result.error, 'error');
 });
-
 function deleteQuestion(id){
-  if(confirm("Are you sure you want to delete this question?")){
-    fetch(`/admin/delete_question/${id}`, {method:'DELETE'})
-      .then(res=>res.json())
-      .then(result=>{
-        if(result.ok){
-          document.querySelector(`#questionsTable tr[data-id='${id}']`).remove();
-          showToast("🗑️ Question deleted!");
-        } else showToast("❌ "+result.error,'error');
-      }).catch(err=>showToast("❌ "+err.message,'error'));
-  }
+  deleteQuestionId = id;
+  deleteTargetId = null;
+  deleteReportId = null;
+  document.getElementById("deleteConfirmModal").style.display = "flex";
 }
-
 /* Load questions automatically when section is opened */
 const originalShowSection = showSection;
 showSection = function(id, btn){
