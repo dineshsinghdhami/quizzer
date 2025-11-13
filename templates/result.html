@@ -8,10 +8,17 @@
 <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
-  * { box-sizing: border-box; margin:0; padding:0; font-family:'Montserrat', sans-serif; }
-  html, body { width: 100%; height: 100%; overflow-x: hidden; }
+  * { box-sizing: border-box; 
+    margin:0; 
+    padding:0; 
+    font-family:'Montserrat', sans-serif; 
+  }
+  html, body { 
+    width: 100%; 
+    height: 100%; 
+    overflow-x: hidden; 
+  }
 
-  /* ===== Theme Colors ===== */
   :root {
     --bg-color: linear-gradient(135deg, #00bcd4, #00796b);
     --text-color: #111827;
@@ -39,13 +46,35 @@
     transition: background 0.3s, color 0.3s;
   }
 
-  /* Floating Circles */
-  .circle { position:absolute; border-radius:50%; opacity:0.15; animation: float 10s infinite ease-in-out alternate; }
-  .circle1 { width:200px; height:200px; top:-50px; left:-50px; background:#fff; }
-  .circle2 { width:300px; height:300px; bottom:-100px; right:-80px; background:#000; animation-duration:12s; }
-  @keyframes float { from { transform: translateY(0); } to { transform: translateY(30px); } }
+  .circle { 
+    position:absolute; 
+    border-radius:50%; 
+    opacity:0.15; 
+    animation: float 10s infinite ease-in-out alternate; 
+  }
+  .circle1 { 
+    width:200px; 
+    height:200px; 
+    top:-50px; 
+    left:-50px; 
+    background:#fff; 
+  }
+  .circle2 { 
+    width:300px; 
+    height:300px; 
+    bottom:-100px; 
+    right:-80px; 
+    background:#000; 
+    animation-duration:12s; 
+  }
+  @keyframes float { 
+    from { 
+      transform: translateY(0); 
+    } to { 
+      transform: translateY(30px);
+     }
+    }
 
-  /* Card Layout */
   .result-card {
     background: var(--card-bg);
     border-radius:20px;
@@ -60,7 +89,7 @@
   }
   .result-card:hover { transform: translateY(-3px); }
 
-  /* Header */
+
   h1 { 
     font-size:30px;
     font-weight:700;
@@ -68,11 +97,19 @@
     margin-bottom:15px;
   }
 
-  /* Username and Score */
-  .username { color: var(--username-color); font-weight:700; margin-bottom:10px; }
-  .score { font-size:26px; font-weight:700; color: var(--score-color); margin-bottom:20px; }
 
-  /* Buttons */
+  .username { 
+    color: var(--username-color); 
+    font-weight:700; 
+    margin-bottom:10px; 
+  }
+  .score { 
+    font-size:26px; 
+    font-weight:700; 
+    color: var(--score-color); 
+    margin-bottom:20px; 
+  }
+
   .btn {
     display:block;
     width:100%;
@@ -85,32 +122,69 @@
     transition:0.3s;
     text-align:center;
   }
-  .btn-purple { background: linear-gradient(45deg, #00bcd4, #00796b); }
-  .btn-purple:hover { opacity:0.9; transform: translateY(-2px); }
-  .btn-blue { background: linear-gradient(45deg, #1976d2, #0dab93); }
-  .btn-blue:hover { opacity:0.9; transform: translateY(-2px); }
-
-  /* Fade-in Animation */
-  .fade-in { opacity:0; transform: translateY(20px); animation: fadeInMoveUp 0.6s forwards; }
-  @keyframes fadeInMoveUp {
-    from { opacity:0; transform: translateY(20px); }
-    to { opacity:1; transform: translateY(0); }
+  .btn-purple { 
+    background: linear-gradient(45deg, #00bcd4, #00796b); 
+  }
+  .btn-purple:hover { 
+    opacity:0.9; 
+    transform: translateY(-2px); 
+  }
+  .btn-blue { 
+    background: linear-gradient(45deg, #1976d2, #0dab93); 
+  }
+  .btn-blue:hover { 
+    opacity:0.9; 
+    transform: translateY(-2px); 
   }
 
-  /* ===== Mobile adjustments ===== */
+  
+  .fade-in { 
+    opacity:0; 
+    transform: translateY(20px); 
+    animation: fadeInMoveUp 0.6s forwards; 
+  }
+  @keyframes fadeInMoveUp {
+    from { 
+      opacity:0; 
+      transform: translateY(20px); 
+    }
+    to { 
+      opacity:1; 
+      transform: translateY(0); 
+    }
+  }
+
+  
   @media (max-width: 700px) {
-    body { padding: 5px; }
-    .result-card { padding:25px 15px; max-width: 90%; }
-    h1 { font-size:24px; }
-    .username { font-size:16px; }
-    .score { font-size:20px; margin-bottom:15px; }
-    .btn { padding:8px 12px; font-size:14px; }
-    .circle1, .circle2 { max-width: 150vw; max-height: 150vh; }
+    body { 
+      padding: 5px; 
+    }
+    .result-card { 
+      padding:25px 15px; 
+      max-width: 90%; 
+    }
+    h1 { 
+      font-size:24px; 
+    }
+    .username { 
+      font-size:16px; 
+    }
+    .score { 
+      font-size:20px;
+       margin-bottom:15px; 
+      }
+    .btn { 
+      padding:8px 12px; 
+      font-size:14px; 
+    }
+    .circle1, .circle2 { 
+      max-width: 150vw; 
+      max-height: 150vh; 
+    }
   }
 </style>
 </head>
 <body>
-  <!-- Floating Circles -->
   <div class="circle circle1"></div>
   <div class="circle circle2"></div>
 
@@ -124,7 +198,7 @@
   </div>
 
 <script>
-  // ===== Dark/Light Mode Script (persistent) =====
+
   const html = document.documentElement;
   function setTheme(mode) {
     html.setAttribute('data-theme', mode);
