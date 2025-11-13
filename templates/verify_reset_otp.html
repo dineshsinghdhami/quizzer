@@ -16,7 +16,6 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-/* ======= Base Layout ======= */
 html, body {
   width: 100%;
   height: 100%;
@@ -35,7 +34,6 @@ body {
   padding: 20px 0;
 }
 
-/* Allow mobile refresh */
 @media (max-width: 768px) {
   html, body {
     overflow-y: auto;
@@ -43,7 +41,6 @@ body {
   }
 }
 
-/* ======= Floating Background Circles ======= */
 .circle {
   position: absolute;
   border-radius: 50%;
@@ -67,7 +64,6 @@ body {
   animation-duration: 12s;
 }
 
-/* ======= Container ======= */
 .container {
   width: 380px;
   max-width: 95%;
@@ -83,7 +79,6 @@ body {
   z-index: 1;
 }
 
-/* ======= Title ======= */
 h2 {
   text-align: center;
   color: #00bcd4;
@@ -92,7 +87,6 @@ h2 {
   letter-spacing: 0.5px;
 }
 
-/* ======= Input ======= */
 input[type="text"] {
   width: 100%;
   padding: 14px 18px;
@@ -110,7 +104,6 @@ input[type="text"]:focus {
   box-shadow: 0 0 6px rgba(0, 188, 212, 0.3);
 }
 
-/* ======= Buttons ======= */
 button {
   width: 100%;
   padding: 14px;
@@ -129,12 +122,10 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* Back Button */
 .back-btn {
   background: #f44336;
 }
 
-/* ======= Flash Messages ======= */
 .flash {
   position: fixed;
   top: 20px;
@@ -150,42 +141,71 @@ button:hover {
   min-width: 220px;
   animation: fadeInOut 3s ease forwards;
 }
-.flash-success { background: #388e3c; }
-.flash-danger { background: #d32f2f; }
-.flash-warning { background: #ff9800; }
-
-@keyframes fadeInOut {
-  0% { opacity: 0; transform: translate(-50%, -10px); }
-  10%, 80% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, -10px); }
+.flash-success { 
+  background: #388e3c; 
+}
+.flash-danger { 
+  background: #d32f2f; 
+}
+.flash-warning { 
+  background: #ff9800; 
 }
 
-/* Floating animation for circles */
+@keyframes fadeInOut {
+  0% { 
+    opacity: 0; 
+    transform: translate(-50%, -10px); 
+  }
+  10%, 80% { 
+    opacity: 1; 
+    transform: translate(-50%, 0); 
+  }
+  100% { 
+    opacity: 0; 
+    transform: translate(-50%, -10px); 
+  }
+}
+
+
 @keyframes float {
   0% { transform: translateY(0); }
   100% { transform: translateY(-15px); }
 }
 
-/* ======= Responsive ======= */
+
 @media (max-width: 500px) {
-  .container { width: 80%; padding: 20px; }
-  h2 { font-size: 1.6rem; }
-  input[type="text"], button, .back-btn { font-size: 0.95rem; padding: 10px 12px; }
+  .container { 
+    width: 80%; 
+    padding: 20px; 
+  }
+  h2 { 
+    font-size: 1.6rem; 
+  }
+  input[type="text"], button, .back-btn { 
+    font-size: 0.95rem; 
+    padding: 10px 12px; 
+  }
 }
 @media (max-width: 380px) {
-  .container { width: 90%; padding: 15px; }
-  h2 { font-size: 1.4rem; }
-  input[type="text"], button, .back-btn { font-size: 0.9rem; padding: 8px 10px; }
+  .container { 
+    width: 90%; 
+    padding: 15px; 
+  }
+  h2 { 
+    font-size: 1.4rem; 
+  }
+  input[type="text"], button, .back-btn { 
+    font-size: 0.9rem; 
+    padding: 8px 10px; 
+  }
 }
 </style>
 </head>
 <body>
 
-<!-- Floating Background Circles -->
 <div class="circle circle1"></div>
 <div class="circle circle2"></div>
 
-<!-- OTP Container -->
 <div class="container" id="mainContainer">
   <h2>Verify OTP</h2>
 
@@ -204,12 +224,10 @@ button:hover {
 </div>
 
 <script>
-// Back button logic
 document.getElementById('backBtn').addEventListener('click', () => {
   window.location.href = "{{ url_for('forgot_password') }}";
 });
 
-// Auto hide flash messages
 setTimeout(() => {
   document.querySelectorAll('.flash').forEach(msg => {
     msg.style.opacity = 0;
@@ -217,6 +235,5 @@ setTimeout(() => {
   });
 }, 2000);
 </script>
-
 </body>
 </html>
